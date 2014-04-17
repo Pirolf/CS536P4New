@@ -304,7 +304,6 @@ class VarDeclNode extends DeclNode {
       
       // Make sure var is of a struct type that's been declared
       if (myType instanceof StructNode) {
-         System.out.println("analyzeName called for " + myId.toString());
          Sym temp = symTbl.lookupGlobal(myType.getTypeNodeType());
          if(temp == null){
          	int ln = myId.getLineNum();
@@ -312,9 +311,7 @@ class VarDeclNode extends DeclNode {
          	ErrMsg.fatal(ln, cn, "Invalid name of struct type");
          }else{
             // Make sure var has access to names in the struct type's symtbl
-            System.out.println("setting " + myId.toString() + "'s symTab");
             s.setData(temp.getData());
-            (((SymTable) s.getData())).print();
          }
       }
       
@@ -937,13 +934,11 @@ class IdNode extends ExpNode {
       // Check that it's declared in scope
       this.analyzeName(tbl);
       if (mySym == null){
-         System.out.println(myStrVal + "has no symbol");
          return null;
       }
 
       // Check it's a struct type
       Sym s = symTbl.lookupGlobal(mySym.getType());
-      System.out.println(myStrVal + "'s type " + mySym.getType());
       SymTable table;
       table = (SymTable) mySym.getData();
 
@@ -1008,11 +1003,9 @@ class DotAccessExpNode extends ExpNode {
       SymTable table = null;
       // Base case, myLoc is an IdNode
       if (myLoc instanceof IdNode){
-         System.out.println(myLoc.toString());
          table = ((IdNode)myLoc).getTbl(symTbl);
          // Tried to do a dot access of a nonstruct
          if (table == null) {
-            System.out.println("table was null" + myLoc.toString());
             int ln, cn;
             ln = ((IdNode) myLoc).getLineNum();
             cn = ((IdNode) myLoc).getCharNum();
