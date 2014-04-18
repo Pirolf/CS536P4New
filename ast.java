@@ -359,8 +359,6 @@ class FnDeclNode extends DeclNode {
          tbl.print();
          tbl.addDecl(myId.toString(), s);
          tbl.print();
-         System.out.println("successfully added " + myId.toString());
-         System.out.println(myType.getTypeNodeType());
       }catch(DuplicateSymException e){
          int ln = myId.getLineNum();
          int cn = myId.getCharNum();
