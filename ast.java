@@ -180,7 +180,6 @@ class FormalsListNode extends ASTnode {
 	}
 	public void analyzeName(SymTable tbl){
 		//scope entry
-		tbl.addScope();
       for (FormalDeclNode n : myFormals)
          n.analyzeName(tbl);
 	}
@@ -366,7 +365,11 @@ class FnDeclNode extends DeclNode {
       s.setFnType(fnType);
       myId.setSym(s);
       try{
+         tbl.print();
          tbl.addDecl(myId.toString(), s);
+         tbl.print();
+         System.out.println("successfully added " + myId.toString());
+         System.out.println(myType.getTypeNodeType());
       }catch(DuplicateSymException e){
          int ln = myId.getLineNum();
          int cn = myId.getCharNum();
