@@ -31,27 +31,46 @@ struct testStruct{
 	int y;
 	struct ts testStruct2;
 };
+//Dup decl for struct
 struct testStruct s;
+struct nonExistStruct s;
 //Invalid name of struct type
 struct nonExistStruct nes;
 //Invalid name of struct type and multiply declared id
 struct nonExistStruct nes;
+//Multi decl: diff types
+void badStructDecl(){
+	int bla;
+	struct testStruct bla;
+}
 //Multiply Declared ID for funcs
 void foo(int a){
 }
 void foo(int a, int b){
 	//Dot-access of non-struct type
-	//a.x = 3;
+	a.x = 3;
 	//Invalid struct field name
-	//s.xyz.t.p = 2;
-	s.testStruct2.t = true;
-	//s.testStruct2.aw.h = 3;
+	s.xyzInvalid.t.p = 2;
+	//s.testStruct2.t = true;
+	s.testStruct2.aw.hInvalid = 3;
 }
 void miao(int a, bool b, int c){
-	foo(1, 2);
-	m1 = 4;
+	//multi var decl
+	int a;
+	int b;
+	//undecl func
+	foofoo(1, 2);
+	//undecl var
+	mmm = 4;
+	
+}
+//bad return
+int badRet0(){
+	//return bad();
+}
+int badRet1(){
+	//return k;
 }
 
-//Undeclared identifier
-//k = 1;
+
 
