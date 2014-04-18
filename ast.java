@@ -348,7 +348,7 @@ class FnDeclNode extends DeclNode {
       p.print("(");
       myFormalsList.unparse(p, 0);
       p.println(") {");
-      myBody.unparse(p, indent+1);
+      myBody.unparse(p, indent+4);
       p.println("}\n");
    }
    public void analyzeName(SymTable tbl){
@@ -447,7 +447,7 @@ class StructDeclNode extends DeclNode {
 		p.print("struct ");
 		myId.unparse(p, 0);
 		p.println("{");
-		myDeclList.unparse(p, indent+1);
+		myDeclList.unparse(p, indent+4);
 		doIndent(p, indent);
 		p.println("};\n");
 
@@ -652,8 +652,8 @@ class IfStmtNode extends StmtNode {
 		p.print("if (");
 		myExp.unparse(p, 0);
 		p.println(") {");
-		myDeclList.unparse(p, indent+1);
-		myStmtList.unparse(p, indent+1);
+		myDeclList.unparse(p, indent+4);
+		myStmtList.unparse(p, indent+4);
 		doIndent(p, indent);
 		p.println("}");
 	}
@@ -694,14 +694,14 @@ class IfElseStmtNode extends StmtNode {
 		p.print("if (");
 		myExp.unparse(p, 0);
 		p.println(") {");
-		myThenDeclList.unparse(p, indent+1);
-		myThenStmtList.unparse(p, indent+1);
+		myThenDeclList.unparse(p, indent+4);
+		myThenStmtList.unparse(p, indent+4);
 		doIndent(p, indent);
 		p.println("}");
 		doIndent(p, indent);
 		p.println("else {");
-		myElseDeclList.unparse(p, indent+1);
-		myElseStmtList.unparse(p, indent+1);
+		myElseDeclList.unparse(p, indent+4);
+		myElseStmtList.unparse(p, indent+4);
 		doIndent(p, indent);
 		p.println("}");        
 	}
@@ -752,8 +752,8 @@ class WhileStmtNode extends StmtNode {
 		p.print("while (");
 		myExp.unparse(p, 0);
 		p.println(") {");
-		myDeclList.unparse(p, indent+1);
-		myStmtList.unparse(p, indent+1);
+		myDeclList.unparse(p, indent+4);
+		myStmtList.unparse(p, indent+4);
 		doIndent(p, indent);
 		p.println("}");
 	}
