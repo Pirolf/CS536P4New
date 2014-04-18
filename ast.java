@@ -348,7 +348,7 @@ class FnDeclNode extends DeclNode {
       p.print("(");
       myFormalsList.unparse(p, 0);
       p.println(") {");
-      myBody.unparse(p, indent+4);
+      myBody.unparse(p, indent+1);
       p.println("}\n");
    }
    public void analyzeName(SymTable tbl){
@@ -447,7 +447,7 @@ class StructDeclNode extends DeclNode {
 		p.print("struct ");
 		myId.unparse(p, 0);
 		p.println("{");
-		myDeclList.unparse(p, indent+4);
+		myDeclList.unparse(p, indent+1);
 		doIndent(p, indent);
 		p.println("};\n");
 
@@ -652,8 +652,8 @@ class IfStmtNode extends StmtNode {
 		p.print("if (");
 		myExp.unparse(p, 0);
 		p.println(") {");
-		myDeclList.unparse(p, indent+4);
-		myStmtList.unparse(p, indent+4);
+		myDeclList.unparse(p, indent+1);
+		myStmtList.unparse(p, indent+1);
 		doIndent(p, indent);
 		p.println("}");
 	}
@@ -694,14 +694,14 @@ class IfElseStmtNode extends StmtNode {
 		p.print("if (");
 		myExp.unparse(p, 0);
 		p.println(") {");
-		myThenDeclList.unparse(p, indent+4);
-		myThenStmtList.unparse(p, indent+4);
+		myThenDeclList.unparse(p, indent+1);
+		myThenStmtList.unparse(p, indent+1);
 		doIndent(p, indent);
 		p.println("}");
 		doIndent(p, indent);
 		p.println("else {");
-		myElseDeclList.unparse(p, indent+4);
-		myElseStmtList.unparse(p, indent+4);
+		myElseDeclList.unparse(p, indent+1);
+		myElseStmtList.unparse(p, indent+1);
 		doIndent(p, indent);
 		p.println("}");        
 	}
@@ -752,8 +752,8 @@ class WhileStmtNode extends StmtNode {
 		p.print("while (");
 		myExp.unparse(p, 0);
 		p.println(") {");
-		myDeclList.unparse(p, indent+4);
-		myStmtList.unparse(p, indent+4);
+		myDeclList.unparse(p, indent+1);
+		myStmtList.unparse(p, indent+1);
 		doIndent(p, indent);
 		p.println("}");
 	}
@@ -930,6 +930,7 @@ class IdNode extends ExpNode {
 	public void analyzeName(SymTable tbl){
       mySym = tbl.lookupGlobal(myStrVal);
 		if (mySym == null)
+			//myCharNum-1: to fix off by 1 err
          ErrMsg.fatal(myLineNum, myCharNum, "Undeclared identifier");
 	}
 

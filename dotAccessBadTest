@@ -73,7 +73,7 @@ void foo(int a, int b){
 }
 void miao(int a, bool b, int c){
 	//multi var decl
-	int a;
+ 	int a;
 	int b;
 	//undecl func
 	foofoo(1, 2);
