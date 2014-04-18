@@ -210,17 +210,8 @@ class FnBodyNode extends ASTnode {
 		myStmtList.unparse(p, indent);
 	}
 	public void analyzeName(SymTable tbl){
-		//tbl.addScope();
 		myDeclList.analyzeName(tbl);
 		myStmtList.analyzeName(tbl);
-		/*
-		try{
-			tbl.removeScope();
-		}catch(EmptySymTableException e){
-			ErrMsg.fatal(0, 0, "EmptySymTable: you screwed up");
-		}
-		*/
-		
 	}
 	// 2 kids
 	private DeclListNode myDeclList;
@@ -304,7 +295,7 @@ class VarDeclNode extends DeclNode {
       // Make sure var is of a struct type that's been declared
       if (myType instanceof StructNode) {
          Sym temp = symTbl.lookupGlobal(myType.getTypeNodeType());
-         if(temp == null){
+         if(temp == null || !temp.getType().equals("struct")){
          	int ln = myId.getLineNum();
          	int cn = myId.getCharNum();
          	ErrMsg.fatal(ln, cn, "Invalid name of struct type");
