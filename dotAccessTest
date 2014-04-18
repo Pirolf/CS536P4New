@@ -2,6 +2,7 @@ struct kitty{
 	bool eatTuna;
 };
 struct ts{
+	int p;
 	int q;
 	struct kitty fluffy;
 };
@@ -19,10 +20,34 @@ void foo(){
 	s.testStruct2 = t;
 	s.testStruct2.fluffy = k;
 	s.testStruct2.q = 0;
+	s.testStruct2.p = s.testStruct2.q - 3 - s.x;
 	s.testStruct2.fluffy.eatTuna = true;
 }
 
 //test RetStmt
-int goodRetFunc(int c){
+void goodRetFunc1(int c){
 	return;
+}
+bool goodRetFunc2(int d){
+	return true;
+}
+int func0(int a, int b, bool c){
+	int x;
+	int y;
+	bool z;
+	bool t;
+	x = 2;
+	y = 3;
+	x++;
+	y--;
+	x = y + 3;
+	z = 5 > 3 && x!= 4;
+	t = !z;
+	a = b = c;
+	goodRetFunc1();
+	func0(x, x*y, (x == y|| x> 3));
+	return (1 + 2 + 3) * 4 + a + x*y;
+}
+bool func1(){
+	return func0() + 2;
 }
