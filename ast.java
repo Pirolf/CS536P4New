@@ -1091,15 +1091,16 @@ class CallExpNode extends ExpNode {
 	// ** unparse **
 	public void unparse(PrintWriter p, int indent) {
 		myId.unparse(p, 0);
-		Sym funcSym = symTbl.lookupGlobal(myId.toString());
-		if (funcSym != null && !funcSym.getFnType().equals("nonfunc"))
-         p.print("(" +funcSym.getFnType() + ")");
+		Sym s = myId.getSym();
+		if (s != null && !s.getFnType().equals("nonfunc"))
+         p.print("(" +s.getFnType() + ")");
 		p.print("(");
 		if (myExpList != null) {
 			myExpList.unparse(p, 0);
 		}
 		p.print(")");
 	}
+
 	public void analyzeName(SymTable tbl){
 		myId.analyzeName(tbl);
 		if(myExpList != null){
