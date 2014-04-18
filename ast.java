@@ -294,10 +294,11 @@ class VarDeclNode extends DeclNode {
       
       // Make sure var is of a struct type that's been declared
       if (myType instanceof StructNode) {
-         Sym temp = symTbl.lookupGlobal(myType.getTypeNodeType());
+         IdNode type = ((StructNode)myType).getId();
+         Sym temp = symTbl.lookupGlobal(type.toString());
          if(temp == null || !temp.getType().equals("struct")){
-         	int ln = myId.getLineNum();
-         	int cn = myId.getCharNum();
+         	int ln = type.getLineNum();
+         	int cn = type.getCharNum();
          	ErrMsg.fatal(ln, cn, "Invalid name of struct type");
          }else{
             // Make sure var has access to names in the struct type's symtbl
@@ -531,15 +532,11 @@ class StructNode extends TypeNode {
 		p.print("struct ");
 		myId.unparse(p, 0);
 	}
-   /* Don't think this does anything, it compiles fine w/o, so it never got
-    * called...
-	public void analyzeName(SymTable tbl){
-      Sym s = tbl.lookupGlobal(myId.toString());
-      // Check that both myId is declared and is of struct type
-      if (s == null || !s.getType().equals("struct"))
-         ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), "Invalid name of struct type");
-	}
-*/
+
+   public IdNode getId() {
+      return myId;
+   }
+
 	public String getTypeNodeType(){
 		return myId.toString();
 	}
