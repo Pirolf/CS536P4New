@@ -356,11 +356,7 @@ class FnDeclNode extends DeclNode {
       s.setFnType(fnType);
       myId.setSym(s);
       try{
-         tbl.print();
          tbl.addDecl(myId.toString(), s);
-         tbl.print();
-         System.out.println("successfully added " + myId.toString());
-         System.out.println(myType.getTypeNodeType());
       }catch(DuplicateSymException e){
          int ln = myId.getLineNum();
          int cn = myId.getCharNum();
