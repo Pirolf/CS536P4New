@@ -14,7 +14,24 @@ int badFunc(void c){
 	return;
 }
 bool a;
-//multiple decl for struct: TO BE ADDED
+//multiple decl for struct
+struct multDecl{
+	int m;
+};
+struct multDecl{
+	int n;
+};
+//decl struct and var with same name
+struct multDeclWithVar{
+	bool p;
+};
+int multDeclWithVar;
+//mult var decl within structs
+struct multVarDecl{
+	int v;
+	int v;
+};
+//set up for bad struct tests
 struct oh{
 	int h;
 };
@@ -69,7 +86,7 @@ int badRet0(){
 	//return bad();
 }
 int badRet1(){
-	//return k;
+	return k;
 }
 
 
