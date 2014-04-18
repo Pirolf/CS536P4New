@@ -1,0 +1,57 @@
+//Multiply declared identifier
+int m1;
+int m1;
+//Multiply declared identifier
+int m2;
+bool m2;
+
+int m3;
+//Non-function declared void: var
+void v;
+
+//Non-function declared void: param
+int badFunc(void c){
+	return;
+}
+bool a;
+//multiple decl for struct: TO BE ADDED
+struct oh{
+	int h;
+};
+struct ts{
+	bool t;
+	struct oh aw;
+};
+//This returns an Invalid Name of A Struct Type
+struct recursiveStruct{
+	struct recursiveStruct rs;
+};
+struct testStruct{
+	int x;
+	int y;
+	struct ts testStruct2;
+};
+struct testStruct s;
+//Invalid name of struct type
+struct nonExistStruct nes;
+//Invalid name of struct type and multiply declared id
+struct nonExistStruct nes;
+//Multiply Declared ID for funcs
+void foo(int a){
+}
+void foo(int a, int b){
+	//Dot-access of non-struct type
+	//a.x = 3;
+	//Invalid struct field name
+	//s.xyz.t.p = 2;
+	s.testStruct2.t = true;
+	//s.testStruct2.aw.h = 3;
+}
+void miao(int a, bool b, int c){
+	foo(1, 2);
+	m1 = 4;
+}
+
+//Undeclared identifier
+//k = 1;
+
