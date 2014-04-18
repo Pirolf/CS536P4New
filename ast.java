@@ -351,10 +351,13 @@ class FnDeclNode extends DeclNode {
       p.println("}\n");
    }
    public void analyzeName(SymTable tbl){
+      // Need to be able to print out formals info for unparse
       String fnType = getFormalTypes() + "->" + myType.getTypeNodeType();
       Sym s = new Sym(myType.getTypeNodeType());
       s.setFnType(fnType);
       myId.setSym(s);
+
+      // Add id to table
       try{
          tbl.addDecl(myId.toString(), s);
       }catch(DuplicateSymException e){
@@ -366,7 +369,8 @@ class FnDeclNode extends DeclNode {
          int cn = myId.getCharNum();
          ErrMsg.fatal(ln, cn, "okay, you really screwed up!");
        }
-
+      
+      // add formals & body as a new scope
       tbl.addScope();
       myFormalsList.analyzeName(tbl);
       myBody.analyzeName(tbl);
@@ -403,14 +407,14 @@ class FormalDeclNode extends DeclNode {
 	}
 	public void analyzeName(SymTable tbl){    
       try {
-      	if((myType.getTypeNodeType()).equals("void")){
+      	// Check for void type variable
+         if((myType.getTypeNodeType()).equals("void")){
       		int ln = myId.getLineNum();
          	int cn = myId.getCharNum();
       		ErrMsg.fatal(ln, cn, "Non-function declared void");
       	}else{
       		tbl.addDecl(myId.toString(), new Sym(myType.getTypeNodeType()));
       	}
-         
       } catch (DuplicateSymException e) {
          int ln = myId.getLineNum();
          int cn = myId.getCharNum();
@@ -448,12 +452,11 @@ class StructDeclNode extends DeclNode {
 
 	}
 	public void analyzeName(SymTable tbl){
-		//should also add to symtbl
-		//scope entry
+      // Make symbol table for this struct type
 		SymTable strctTable = new SymTable();
       myDeclList.analyzeName(strctTable);
-		//tbl.lookupLocal(myId.toString());
       Sym s = new Sym("struct");
+      // Store struct type's symtable in it's own symbol
       s.setData(strctTable);
       try {
          tbl.addDecl(myId.toString(), s);
@@ -528,11 +531,15 @@ class StructNode extends TypeNode {
 		p.print("struct ");
 		myId.unparse(p, 0);
 	}
+   /* Don't think this does anything, it compiles fine w/o, so it never got
+    * called...
 	public void analyzeName(SymTable tbl){
-      if (tbl.lookupGlobal(myId.toString()) == null)
+      Sym s = tbl.lookupGlobal(myId.toString());
+      // Check that both myId is declared and is of struct type
+      if (s == null || !s.getType().equals("struct"))
          ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), "Invalid name of struct type");
 	}
-
+*/
 	public String getTypeNodeType(){
 		return myId.toString();
 	}
@@ -1085,8 +1092,8 @@ class CallExpNode extends ExpNode {
 	public void unparse(PrintWriter p, int indent) {
 		myId.unparse(p, 0);
 		Sym funcSym = symTbl.lookupGlobal(myId.toString());
-		
-		p.print("(" +funcSym.getFnType() + ")");
+		if (funcSym != null && !funcSym.getFnType().equals("nonfunc"))
+         p.print("(" +funcSym.getFnType() + ")");
 		p.print("(");
 		if (myExpList != null) {
 			myExpList.unparse(p, 0);
