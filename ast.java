@@ -361,45 +361,32 @@ class FnDeclNode extends DeclNode {
       p.println("}\n");
    }
    public void analyzeName(SymTable tbl){
-      Sym dupFunc = null;
-      try {
-         dupFunc = tbl.lookupGlobal(myId.toString());
-         if(dupFunc != null){
-            throw new DuplicateSymException();
-         }
-      } catch (DuplicateSymException e) {
+      String fnType = getFormalTypes() + "->" + myType.getTypeNodeType();
+      Sym s = new Sym(myType.getTypeNodeType());
+      s.setFnType(fnType);
+      myId.setSym(s);
+      try{
+         tbl.addDecl(myId.toString(), s);
+      }catch(DuplicateSymException e){
          int ln = myId.getLineNum();
          int cn = myId.getCharNum();
          ErrMsg.fatal(ln, cn, "Multiply declared identifier");
-      }
+       }catch(EmptySymTableException e){
+         int ln = myId.getLineNum();
+         int cn = myId.getCharNum();
+         ErrMsg.fatal(ln, cn, "okay, you really screwed up!");
+       }
+
       tbl.addScope();
       myFormalsList.analyzeName(tbl);
       myBody.analyzeName(tbl);
+
       try {
          tbl.removeScope();
       } catch (EmptySymTableException e) {
          int ln = myId.getLineNum();
          int cn = myId.getCharNum();
          ErrMsg.fatal(ln, cn, "okay, you really screwed up!");
-      }
-
-      String fnType = getFormalTypes() + "->" + myType.getTypeNodeType();
-      Sym s = new Sym(myType.getTypeNodeType());
-      s.setFnType(fnType);
-      myId.setSym(s);
-      
-      if(dupFunc == null){
-     	   try{
-            tbl.addDecl(myId.toString(), s);
-         }catch(DuplicateSymException e){
-            int ln = myId.getLineNum();
-        	   int cn = myId.getCharNum();
-            ErrMsg.fatal(ln, cn, "Multiply declared identifier");
-      	 }catch(EmptySymTableException e){
-      	   int ln = myId.getLineNum();
-            int cn = myId.getCharNum();
-            ErrMsg.fatal(ln, cn, "okay, you really screwed up!");
-           }
       }
    }
 
