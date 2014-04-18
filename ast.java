@@ -362,16 +362,21 @@ class FnDeclNode extends DeclNode {
    }
    public void analyzeName(SymTable tbl){
       Sym dupFunc = null;
-      try {
+     // try {
          dupFunc = tbl.lookupGlobal(myId.toString());
+         /*
+         //Unecessary 
          if(dupFunc != null){
             throw new DuplicateSymException();
          }
+         */
+         /*
       } catch (DuplicateSymException e) {
          int ln = myId.getLineNum();
          int cn = myId.getCharNum();
          ErrMsg.fatal(ln, cn, "Multiply declared identifier");
       }
+      */
       tbl.addScope();
       myFormalsList.analyzeName(tbl);
       myBody.analyzeName(tbl);
